@@ -71,15 +71,17 @@ def save_icon(name, grid):
     for y, row in enumerate(grid):
         for x, color in enumerate(row):
             img.putpixel((x, y), color)
-    path = os.path.join(OUTDIR, name, "icon.png")
-    img.save(path)
-    # Also save a 16x upscaled preview for human review
-    preview = img.resize((256, 256), Image.NEAREST)
-    preview_path = os.path.join(OUTDIR, name, "icon_preview.png")
-    preview.save(preview_path)
+    # Save 16x16 original
+    orig_path = os.path.join(OUTDIR, name, "icon_16x16.png")
+    img.save(orig_path)
+    # Save 512x512 upscaled with nearest-neighbor (crisp pixels)
+    # This is what you upload to Yoto — the app won't blur it further
+    upload = img.resize((512, 512), Image.NEAREST)
+    upload_path = os.path.join(OUTDIR, name, "icon.png")
+    upload.save(upload_path)
     print(f"  {name}")
-    print(f"    → {path}")
-    print(f"    → {preview_path}")
+    print(f"    → {upload_path} (512×512, upload this)")
+    print(f"    → {orig_path} (16×16 original)")
 
 
 # ═══════════════════════════════════════════════
@@ -91,21 +93,21 @@ def save_icon(name, grid):
 #    bright yellow flag.
 # ═══════════════════════════════════════════════
 disney = parse_grid("""
-______YY________
-_______B________
-__B___BBB___B___
-_BBB__BBB__BBB__
-_BBB_BBBBB_BBB__
-_BBBBBBBBBBBBB__
-__BBBBBBBBBBB___
-__BBbBBBBBbBB___
-__BBbBBBBBbBB___
-__BBBBBBBBBBB___
-__BBBBBBBBBBB___
-__BBBBBbBBBBB___
-__BBBB___BBBB___
-__BBBB___BBBB___
-_BBBBBBBBBBBBB__
+________________
+_______YY_______
+_______BB_______
+___B__BBBB__B___
+___BB_BBBB_BB___
+___BBBBBBBBBB___
+___BBBBBBBBBB___
+___BBbBBBBbBB___
+___BBbBBBBbBB___
+___BBBBBBBBBB___
+___BBBBbbBBBB___
+___BBB____BBB___
+___BBB____BBB___
+___BBBBBBBBBB___
+________________
 ________________
 """)
 
@@ -171,20 +173,20 @@ ________________
 # ═══════════════════════════════════════════════
 friedman = parse_grid("""
 ________________
-_BB__________BB_
-_BBBB______BBBB_
-_BBBBB____BBBBB_
+__BB________BB__
+__BBB______BBB__
+__BBBB____BBBB__
+___BBBBBBBBBB___
 __BBBBBBBBBBBB__
-_BBBBBBBBBBBBBB_
-_BBBBBBBBBBBBBB_
-_BBNNBBBBBBNNBB_
-_BBNNBBBBBBNNBB_
-_BBBBBBBBBBBBBB_
-_BBBBBBRRBBBBBB_
-_BBBBBBBBBBBBBB_
+__BBBBBBBBBBBB__
+__BBNBBBBBBNBB__
+__BBNBBBBBBNBB__
+__BBBBBBBBBBBB__
+__BBBBBRRBBBBB__
 __BBBBBBBBBBBB__
 ___BBBBBBBBBB___
 ____BBBBBBBB____
+________________
 ________________
 """)
 
@@ -232,4 +234,4 @@ if __name__ == "__main__":
     print("Generating Yoto 16×16 pixel art icons...\n")
     for name, grid in ICONS.items():
         save_icon(name, grid)
-    print("\nDone! Each directory has icon.png (16×16) + icon_preview.png (256×256).")
+    print("\nDone! Upload icon.png (512×512) to Yoto — pixels will stay crisp.")

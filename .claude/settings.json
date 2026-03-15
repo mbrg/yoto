@@ -3,5 +3,13 @@
     "canvas-design@anthropic-agent-skills": true,
     "skill-creator@claude-plugins-official": true
   },
+  "extraKnownMarketplaces": {
+    "anthropic-agent-skills": {
+      "source": {
+        "source": "git",
+        "url": "git@github.com:mbrg/anthropic-skills.git"
+      }
+    }
+  },
   "autoMemoryEnabled": false
 }

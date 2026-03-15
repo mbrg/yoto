@@ -1,5 +1,7 @@
 {
   "enabledPlugins": {
-    "canvas-design@anthropic-agent-skills": true
-  }
+    "canvas-design@anthropic-agent-skills": true,
+    "skill-creator@claude-plugins-official": true
+  },
+  "autoMemoryEnabled": false
 }

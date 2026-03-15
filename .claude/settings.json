@@ -1,0 +1,5 @@
+{
+  "enabledPlugins": {
+    "canvas-design@anthropic-agent-skills": true
+  }
+}
